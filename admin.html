@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8" name="keywords">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+	  <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Your title</title>
+  </head>
+  <body>
+  <div align="center">
+    <p id="fileList"></p>
+  </div>
+  <script>
+    async function fetchFileList() {
+      try {
+        const response = await fetch('/filelist');
+        const fileList = await response.json();
+        const fileListElement = document.getElementById('fileList');
+        fileList.forEach((file) => {
+          const listItem = document.createElement('p');
+          const link = document.createElement('a');
+          link.href = `/uploads/${file}`;
+          link.textContent = file;
+          listItem.appendChild(link);
+          fileListElement.appendChild(listItem);
+        });
+      } catch (error) {
+        console.error('Gagal mendapatkan daftar file:', error);
+      }
+    }
+
+    fetchFileList();
+    </script>
+  </body>
+</html>
